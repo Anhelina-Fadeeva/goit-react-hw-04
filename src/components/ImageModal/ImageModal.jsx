@@ -9,8 +9,8 @@ const ImageModal = ({ modalIsOpen, closeModal, imageModal }) => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        className={s.modalContent} // Используем класс
-        overlayClassName={s.modalOverlay} // Используем класс
+        className={s.modalContent} 
+        overlayClassName={s.modalOverlay} 
         bodyOpenClassName={s.noScroll}
         contentLabel='Image Modal'
       >

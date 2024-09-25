@@ -9,22 +9,31 @@
     right: 0;
     bottom: 0;
     background-color: rgba(1, 1, 1, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out;
 }
 
 .modalContent {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: auto;
+    position: relative;
+    max-width: 80%;
+    max-height: 90%;
     padding: 0;
     border: none;
+    background-color: transparent;
+    transition: transform 0.3s ease-in-out;
+    transform: scale(0.95);
+}
+
+.modalContent:open {
+    transform: scale(1);
 }
 
 .imgModal {
     width: 100%;
     height: auto;
     object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }

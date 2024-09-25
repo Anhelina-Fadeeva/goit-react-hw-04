@@ -1,17 +1,29 @@
 .loadButton {
     width: 200px;
-    height: 40px;
-    background-color: #ff00e3;
+    height: 45px;
+    background: linear-gradient(45deg, #ff00e3, #f16ee7);
     border: none;
     color: aliceblue;
     font-weight: bold;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .loadButton:hover {
-    background-color: #f16ee7;
+    background: linear-gradient(45deg, #f16ee7, #ff00e3);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.loadButton:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.loadButton:focus {
+    outline: 2px solid #ff00e3;
+    outline-offset: 4px;
 }
 
 .buttonContainer {

@@ -2,7 +2,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import SearchBar from './components/SearchBar/SearchBar';
 import { fetchArticles } from './services/api';
 import ImageGallery from './components/ImageGallery/ImageGallery';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Loader from './components/Loader/Loader';
 import ErrorMessage from './components/ErrorMessage/ErrorMessage';
 import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
@@ -19,38 +19,45 @@ function App() {
   const [imageModal, setImageModal] = useState('');
 
   useEffect(() => {
-    if (!searchValue) {
-      return;
-    }
+    if (!searchValue) return;
+
+    const controller = new AbortController();
     const getData = async () => {
       try {
         setGetErr(false);
         setIsLoader(true);
-        const data = await fetchArticles(page, searchValue);
+        const data = await fetchArticles(page, searchValue, { signal: controller.signal });
         setDataImage(prev => [...prev, ...data.results]);
         setMaxPage(data.total_pages);
         if (data.total_pages === 0) {
-          getNotFaundData();
+          getNotFoundData();
         }
-      } catch {
-        setGetErr(true);
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          setGetErr(true);
+        }
       } finally {
         setIsLoader(false);
       }
     };
     getData();
+
+    
+    return () => {
+      controller.abort();
+    };
   }, [page, searchValue]);
 
-  function openModal(imgUrl) {
+  const openModal = useCallback((imgUrl) => {
     setImageModal(imgUrl);
     setIsOpenModal(true);
-  }
+  }, []);
 
-  function closeModal() {
+  const closeModal = useCallback(() => {
     setIsOpenModal(false);
-  }
+  }, []);
 
-  const getNotFaundData = () => {
+  const getNotFoundData = () => {
     return toast('The data for your request was not found', {
       icon: '😥',
       style: {
@@ -61,10 +68,12 @@ function App() {
     });
   };
 
-  const getSubmitValue = value => {
-    setSearchValue(value);
-    setDataImage([]);
-    setPage(1);
+  const getSubmitValue = (value) => {
+    if (value !== searchValue) {
+      setSearchValue(value);
+      setDataImage([]);
+      setPage(1);
+    }
   };
 
   const getLoadMoreImg = () => {

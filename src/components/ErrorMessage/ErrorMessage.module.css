@@ -1,0 +1,22 @@
+.errorAlert {
+    background-color: #ffe6e6;
+    color: #d8000c;
+    padding: 20px;
+    border-left: 5px solid #d8000c;
+    border-radius: 8px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.errorIcon {
+    font-size: 24px;
+    color: #d8000c;
+}
+
+.errorText {
+    font-size: 16px;
+    margin: 0;
+}
