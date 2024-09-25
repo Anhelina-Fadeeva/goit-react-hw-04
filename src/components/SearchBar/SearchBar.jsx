@@ -1,11 +1,11 @@
 import toast from 'react-hot-toast';
-import s from './SearchBar.module.css';
+import styles from './SearchBar.module.css';
 
 const SearchBar = ({ onSubmit }) => {
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    const inputValue = e.target.elements.serchInput.value;
+    
+    const inputValue = e.target.elements.searchInput.value; 
     if (!inputValue) {
       return toast('Text must be entered to search for images!', {
         icon: '❌',
@@ -18,22 +18,24 @@ const SearchBar = ({ onSubmit }) => {
     }
     onSubmit(inputValue);
   };
+
   return (
-    <header className={s.searchWrap}>
-      <form className={s.searchForm} onSubmit={handleSubmit}>
+    <header className={styles.container}>
+      <form className={styles.form} onSubmit={handleSubmit}>
         <input
-          className={s.searchInput}
-          name='serchInput'
+          className={styles.inputField}
+          name='searchInput'
           type='text'
           autoComplete='off'
           autoFocus
           placeholder='Search images and photos'
         />
-        <button className={s.searchBtn} type='submit'>
+        <button className={styles.submitButton} type='submit'>
           Search
         </button>
       </form>
     </header>
   );
 };
+
 export default SearchBar;

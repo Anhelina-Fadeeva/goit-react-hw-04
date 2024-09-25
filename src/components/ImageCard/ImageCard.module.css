@@ -1,14 +1,5 @@
-.imgGalary {
-    width: 360px;
-    height: 200px;
+.imageGallery {
+    width: 485px;
+    height: 300px;
     object-fit: cover;
-}
-
-.likesBox {
-    border: 1px solid #9f7594;
-    padding: 5px;
-    text-align: center;
-    border-top: none;
-    color: aliceblue;
-    background-color: #b79fb7;
 }

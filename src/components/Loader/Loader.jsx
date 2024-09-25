@@ -3,19 +3,18 @@ import s from './Loader.module.css';
 
 const Loader = () => {
   return (
-    <div className={s.loaderWraper}>
+    <div className={s.loadmoWrap}>
       <MutatingDots
         visible={true}
-        height='100'
-        width='100'
-        color='#4fa94d'
-        secondaryColor='#4fa94d'
-        radius='12.5'
-        ariaLabel='mutating-dots-loading'
-        wrapperStyle={{}}
-        wrapperClass=''
+        height={100} // Значение передается как число
+        width={100}  // Значение передается как число
+        color="#4fa94d"
+        secondaryColor="#4fa94d"
+        radius={12.5} // Значение передается как число
+        ariaLabel="mutating-dots-loading"
       />
     </div>
   );
 };
+
 export default Loader;

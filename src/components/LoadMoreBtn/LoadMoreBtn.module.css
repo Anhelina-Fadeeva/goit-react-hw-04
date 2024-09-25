@@ -1,4 +1,4 @@
-.loadBtn {
+.loadButton {
     width: 200px;
     height: 40px;
     background-color: #ff00e3;
@@ -6,9 +6,15 @@
     color: aliceblue;
     font-weight: bold;
     border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.buttonBox {
+.loadButton:hover {
+    background-color: #f16ee7;
+}
+
+.buttonContainer {
     margin: 0 auto;
     text-align: center;
     padding-bottom: 100px;
