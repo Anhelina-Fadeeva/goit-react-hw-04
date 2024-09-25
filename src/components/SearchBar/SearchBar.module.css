@@ -1,7 +1,7 @@
 .searchWrap {
     padding: 20px;
     margin-bottom: 20px;
-    background-color: burlywood;
+    background-color: #edb9ea;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -15,10 +15,9 @@
 .searchInput {
     width: 100%;
     padding: 10px 10px 10px 90px;
-    /* Додаємо місце для кнопки */
     font-size: 16px;
     border-radius: 4px;
-    border: 1px solid #ccc;
+    border: 1px solid #ff00e3;
 }
 
 .searchBtn {
@@ -26,8 +25,8 @@
     left: 0;
     top: 0;
     bottom: 0;
-    padding: 0 15px;
-    background-color: #007bff;
+    padding: 0 20px;
+    background-color: #ff00e3;
     color: white;
     border: none;
     cursor: pointer;
