@@ -1,35 +1,95 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import toast, { Toaster } from 'react-hot-toast';
+import SearchBar from './components/SearchBar/SearchBar';
+import { fetchArticles } from './services/api';
+import ImageGallery from './components/ImageGallery/ImageGallery';
+import { useEffect, useState } from 'react';
+import Loader from './components/Loader/Loader';
+import ErrorMessage from './components/ErrorMessage/ErrorMessage';
+import LoadMoreBtn from './components/LoadMoreBtn/LoadMoreBtn';
+import ImageModal from './components/ImageModal/ImageModal';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [searchValue, setSearchValue] = useState('');
+  const [dataImage, setDataImage] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isLoader, setIsLoader] = useState(false);
+  const [getErr, setGetErr] = useState(false);
+  const [maxPage, setMaxPage] = useState(0);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [imageModal, setImageModal] = useState('');
+
+  useEffect(() => {
+    if (!searchValue) {
+      return;
+    }
+    const getData = async () => {
+      try {
+        setGetErr(false);
+        setIsLoader(true);
+        const data = await fetchArticles(page, searchValue);
+        setDataImage(prev => [...prev, ...data.results]);
+        setMaxPage(data.total_pages);
+        if (data.total_pages === 0) {
+          getNotFaundData();
+        }
+      } catch {
+        setGetErr(true);
+      } finally {
+        setIsLoader(false);
+      }
+    };
+    getData();
+  }, [page, searchValue]);
+
+  function openModal(imgUrl) {
+    setImageModal(imgUrl);
+    setIsOpenModal(true);
+  }
+
+  function closeModal() {
+    setIsOpenModal(false);
+  }
+
+  const getNotFaundData = () => {
+    return toast('The data for your request was not found', {
+      icon: '😥',
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    });
+  };
+
+  const getSubmitValue = value => {
+    setSearchValue(value);
+    setDataImage([]);
+    setPage(1);
+  };
+
+  const getLoadMoreImg = () => {
+    setPage(prev => prev + 1);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <SearchBar onSubmit={getSubmitValue} />
+      {isLoader && <Loader />}
+      {dataImage.length > 0 && (
+        <ImageGallery dataImage={dataImage} openModal={openModal} />
+      )}
+      {dataImage.length > 0 && maxPage > page && (
+        <LoadMoreBtn loadMore={getLoadMoreImg} />
+      )}
+      {getErr && <ErrorMessage />}
+      <ImageModal
+        modalIsOpen={isOpenModal}
+        closeModal={closeModal}
+        imageModal={imageModal}
+      />
+      <Toaster position='top-center' reverseOrder={false} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
